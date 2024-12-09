@@ -1,3 +1,6 @@
+ALL CREDIT STILL GOES TO rsetiawan7 
+https://github.com/rsetiawan7
+
 # samp-account
 
 [![sampctl](https://shields.southcla.ws/badge/sampctl-samp--account-2f2f2f.svg?style=for-the-badge)](https://github.com/bwhitmire55/samp-account)
