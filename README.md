@@ -11,10 +11,8 @@ samp-account uses the SA:MP native SQLite database system for storage, Slice's p
 
 ## Installation
 
-Simply install to your project:
+Download my Version on the releases page.
 
-```bash
-sampctl package install bwhitmire55/samp-account
 ```
 
 Include in your code and begin using the library:
