@@ -1,25 +1,15 @@
 ALL CREDIT STILL GOES TO rsetiawan7 
 https://github.com/rsetiawan7
 
-# samp-account
-
-[![sampctl](https://shields.southcla.ws/badge/sampctl-samp--account-2f2f2f.svg?style=for-the-badge)](https://github.com/bwhitmire55/samp-account)
+# About
 
 samp-account was created to allow extensive user-account systems to be streamlined by not worrying about implementation details. This means we can have a fully working user account system, with data loaded from a database, and stored to a database, all with one function call.
 
 samp-account uses the SA:MP native SQLite database system for storage, Slice's pointers library for data binding, and Y_Less' Whirlpool plugin for password hashing.
 
-## Installation
+# Installation
 
 Download my Version on the releases page.
-
-```
-
-Include in your code and begin using the library:
-
-```pawn
-#include <account>
-```
 
 ## Functions
 
