@@ -7,7 +7,7 @@
 #endif 
 #define ACCOUNT_INC 
 
-#include <a_samp>
+#include <open.mp>
 #include <pointers>
 
 native WP_Hash(buffer[], len, const str[]);
@@ -55,7 +55,7 @@ static
 
 public OnGameModeInit()
 {
-    gDBHandle = db_open(ACCOUNT_DATABASE);
+    gDBHandle = DB_Open(ACCOUNT_DATABASE);
 
     if(!IsValidDB(gDBHandle)) {
         printf("[ERROR - account.inc] Could not connect to the database '%s'", ACCOUNT_DATABASE);
@@ -76,7 +76,7 @@ forward acc_OnGameModeInit();
 public OnGameModeExit()
 {
     if(IsValidDB(gDBHandle)) {
-        db_close(gDBHandle);
+        DB_Close(gDBHandle);
     }
     return CallLocalFunction("acc_OnGameModeExit", "", "");
 }
@@ -96,13 +96,13 @@ public OnPlayerConnect(playerid) {
         DBResult: result;
 
     format(query, sizeof(query), "SELECT id FROM `"ACCOUNT_DATABASE_TABLE"` WHERE username = '%s'", ReturnPlayerName(playerid));
-    result = db_query(gDBHandle, query);
+    result = DB_ExecuteQuery(gDBHandle, query);
 
     if(result) {
-        if(db_num_rows(result)) {
-            gPlayerData[playerid][eUID] = db_get_field_assoc_int(result, "id");
+        if(DB_GetRowCount(result)) {
+            gPlayerData[playerid][eUID] = DB_GetFieldIntByName(result, "id");
         }
-        db_free_result(result);
+        DB_FreeResultSet(result);
     }
     return CallLocalFunction("acc_OnPlayerConnect", "i", playerid);
 }
@@ -151,10 +151,10 @@ stock RegisterPlayer(playerid, const password[])
         DBResult: result;
 
     format(query, sizeof(query), "SELECT id FROM `"ACCOUNT_DATABASE_TABLE"` WHERE username = '%s'", ReturnPlayerName(playerid));
-    result = db_query(gDBHandle, query);
+    result = DB_ExecuteQuery(gDBHandle, query);
 
     if(result) {
-        if(db_num_rows(result)) {
+        if(DB_GetRowCount(result)) {
             printf("[ERROR - account.inc] Username is already registered -> '%s'", ReturnPlayerName(playerid));
         } else {
             db_free_result(result);
@@ -169,7 +169,7 @@ stock RegisterPlayer(playerid, const password[])
                 ip
             );
 
-            db_query(gDBHandle, query);
+            DB_ExecuteQuery(gDBHandle, query);
             format(query, sizeof(query), "SELECT id FROM `"ACCOUNT_DATABASE_TABLE"` WHERE username = '%s'", ReturnPlayerName(playerid));
             result = db_query(gDBHandle, query);
 
@@ -372,7 +372,7 @@ static SaveAccountData(playerid)
         strcat(query, ReturnPlayerName(playerid));
         strcat(query, "'");
 
-        db_query(gDBHandle, query);
+        DB_ExecuteQuery(gDBHandle, query);
         return 1;
     }
     return 0;
@@ -454,7 +454,7 @@ static GetOpenAccountSlot() {
 
 static CreateDefaultTable() {
     if(IsValidDB(gDBHandle)) {
-        db_query(gDBHandle, "CREATE TABLE IF NOT EXISTS `"ACCOUNT_DATABASE_TABLE"` ( \
+        DB_ExecuteQuery(gDBHandle, "CREATE TABLE IF NOT EXISTS `"ACCOUNT_DATABASE_TABLE"` ( \
             id INTEGER PRIMARY KEY AUTOINCREMENT, \
             username TEXT, \
             password BLOB, \
@@ -470,7 +470,7 @@ static FloatFixCall({Float,_}:...) {
 }
 
 static ReturnPlayerName(playerid) {
-    new name[MAX_PLAYER_NAME + 1];
+    new name[MAX_PLAYER_NAME];
     GetPlayerName(playerid, name, sizeof(name));
     return name;
 }
