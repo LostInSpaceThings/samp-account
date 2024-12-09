@@ -9,7 +9,7 @@ samp-account uses the SA:MP native SQLite database system for storage, Slice's p
 
 # Installation
 
-Download my Version on the releases page.
+Download my Version on the releases page. [Link](https://github.com/LostInSpaceThings/samp-account/releases/tag/v1.0.0)
 
 ## Functions
 
